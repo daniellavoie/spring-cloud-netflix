@@ -507,6 +507,8 @@ If you want some thread local context to propagate into a `@HystrixCommand` the 
 
 The same thing applies if you are using `@SessionScope` or `@RequestScope`. You will know when you need to do this because of a runtime exception that says it can't find the scoped context.
 
+You also have the option to set the `hystrix.shareSecurityContext` to `true`. Doing so will auto configure an Hystrix command execution hook who will transfer the `SecurityContext` from your main thread to the one used by the Hystrix command. Hystrix does not allow multiple command execution hooks to be registered so an extension mechanism is available by implementing a bean with `CustomCommandExecutionHook`. Any previously configured Command Hook will be overwriten by this one. Declare a CustomCommandExecutionHook is you require another Command Hook.  
+
 ### Health Indicator
 
 The state of the connected circuit breakers are also exposed in the
